@@ -1,0 +1,50 @@
+# Virtual environments
+.venv/
+venv/
+venv*/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Generated data and artifacts
+data/raw/
+data/processed/
+data/registry.db
+data/training_meta.json
+data/model.json
+feature_store/feature_repo/data/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Environment / secrets
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+
+# PySpark local artifacts
+metastore_db/
+spark-warehouse/
+derby.log
+
+# Test / coverage
+.coverage
+htmlcov/
+.tox/

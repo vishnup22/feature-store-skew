@@ -1,0 +1,9 @@
+project: taxi_skew_demo
+provider: local
+entity_key_serialization_version: 2
+online_store:
+  type: redis
+  connection_string: "localhost:6379"
+offline_store:
+  type: file
+registry: data/registry.db

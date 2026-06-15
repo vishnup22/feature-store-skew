@@ -1,0 +1,17 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  api:
+    build: .
+    depends_on:
+      - redis
+    ports:
+      - "8000:8000"
+    environment:
+      FEAST_REDIS_CONNECTION_STRING: redis:6379
+    volumes:
+      - .:/app
+    command: uvicorn serving.api:app --host 0.0.0.0 --port 8000 --reload
