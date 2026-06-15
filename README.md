@@ -1,6 +1,6 @@
 # Feature Store Skew Demo
 
-[![CI](https://github.com/your-org/feature-store-skew/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/feature-store-skew/actions/workflows/ci.yml)
+[![CI](https://github.com/vishnup22/feature-store-skew/actions/workflows/ci.yml/badge.svg)](https://github.com/vishnup22/feature-store-skew/actions/workflows/ci.yml)
 
 End-to-end ML engineering demo that proves **train-serve feature parity** using Feast, Redis, PySpark, and FastAPI. Every component runs locally against real NYC Taxi trip data — no mocks, no placeholders.
 
