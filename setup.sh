@@ -24,17 +24,7 @@ pip install -r requirements.txt
 
 echo "==> Downloading NYC taxi parquet dataset"
 mkdir -p "${RAW_DIR}"
-python - <<'PY'
-from pathlib import Path
-import urllib.request
-
-raw_path = Path("data/raw/yellow_tripdata_2023-01.parquet")
-url = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet"
-raw_path.parent.mkdir(parents=True, exist_ok=True)
-print(f"Downloading {url} -> {raw_path}")
-urllib.request.urlretrieve(url, raw_path)
-print(f"Download complete: {raw_path.stat().st_size} bytes")
-PY
+python pipeline/download_raw_data.py
 
 echo "==> Running PySpark feature engineering"
 python pipeline/spark_features.py

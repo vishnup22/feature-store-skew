@@ -26,16 +26,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.10"
           cache: pip
@@ -47,17 +47,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Download NYC taxi dataset
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import urllib.request
-
-          raw_path = Path("data/raw/yellow_tripdata_2023-01.parquet")
-          url = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet"
-          raw_path.parent.mkdir(parents=True, exist_ok=True)
-          urllib.request.urlretrieve(url, raw_path)
-          print(f"Downloaded {raw_path.stat().st_size} bytes")
-          PY
+        run: python pipeline/download_raw_data.py
 
       - name: Run PySpark feature engineering
         run: python pipeline/spark_features.py

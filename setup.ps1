@@ -42,18 +42,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Step "Downloading NYC taxi parquet dataset"
-$downloadScript = @'
-from pathlib import Path
-import urllib.request
-
-raw_path = Path("data/raw/yellow_tripdata_2023-01.parquet")
-url = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet"
-raw_path.parent.mkdir(parents=True, exist_ok=True)
-print(f"Downloading {url} -> {raw_path}")
-urllib.request.urlretrieve(url, raw_path)
-print(f"Download complete: {raw_path.stat().st_size} bytes")
-'@
-Invoke-VenvPython -c $downloadScript
+Invoke-VenvPython pipeline/download_raw_data.py
 
 Write-Step "Running PySpark feature engineering"
 Invoke-VenvPython pipeline/spark_features.py
