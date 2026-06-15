@@ -91,7 +91,7 @@ Shared helpers in `feature_store/feature_hash.py` and `feature_store/feast_clien
 **Linux / macOS / WSL**
 
 ```bash
-git clone https://github.com/your-org/feature-store-skew.git
+git clone https://github.com/vishnup22/feature-store-skew.git
 cd feature-store-skew
 chmod +x setup.sh feature_store/materialize.sh
 ./setup.sh
@@ -100,7 +100,7 @@ chmod +x setup.sh feature_store/materialize.sh
 **Windows (PowerShell)**
 
 ```powershell
-git clone https://github.com/your-org/feature-store-skew.git
+git clone https://github.com/vishnup22/feature-store-skew.git
 cd feature-store-skew
 .\setup.ps1
 ```
@@ -175,7 +175,19 @@ pytest tests/test_skew.py -v
 pytest tests/test_skew.py -v
 ```
 
-Expected result: all tests pass, with tabulated PASS/FAIL output per test.
+Each test prints a tabulated PASS/FAIL summary to stdout. The suite contains 9 tests:
+
+| Test | What it checks |
+|---|---|
+| `test_training_contract_valid` | `training_meta.json` exists and has all required keys |
+| `test_model_file_exists_and_loadable` | `model.json` loads and has the correct feature count |
+| `test_feature_column_order_matches` | Online store column order matches the offline training order |
+| `test_feature_dtypes_match` | Online feature dtypes are Float32, matching training metadata |
+| `test_no_null_features_in_online_store` | No null values returned from Redis for any feature |
+| `test_vector_shape_matches` | Online feature vector is `[1, 5]` for each vendor |
+| `test_feature_vector_values_match` | Per-feature offline vs. online values match within tolerance `1e-4` |
+| `test_feature_hash_matches` | Global SHA256 hash of online matrix matches training metadata |
+| `test_predict_endpoint_returns_hashes_match` | `/predict` returns `hashes_match: true` for vendor IDs 1 and 2 |
 
 ## Continuous Integration
 
@@ -186,11 +198,10 @@ GitHub Actions runs the full parity pipeline on every push and pull request to `
 3. Feast apply + Redis materialization (`feature_store/materialize.py`)
 4. Offline training + metadata logging
 5. `pytest tests/test_skew.py -v`
-6. FastAPI health check + Docker image build
+6. FastAPI health check (`uvicorn` + `curl /health`)
+7. Docker image build (`docker compose build api`)
 
 Workflow file: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
-
-Replace `your-org/feature-store-skew` in the README badge URL after publishing the repository.
 
 ## Project Layout
 
